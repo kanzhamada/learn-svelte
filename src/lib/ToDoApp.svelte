@@ -41,14 +41,7 @@
   }
 </script>
 
-<!-- <button onclick={remove}>Remove</button> -->
-
-<form action="">
-  <input type="text" id="todo" bind:value={name} />
-  <button onclick={add}>Add</button>
-</form>
-
-{#each data as todo (todo.id)}
+{#snippet todoRow(todo)}
   <li
     in:fly={{ y: -200, duration: 2000 }}
     out:fly={{ y: 200, duration: 2000 }}
@@ -65,6 +58,17 @@
       <button onclick={() => remove(todo.id)}>Remove</button>
     {/if}
   </li>
+{/snippet}
+
+<!-- <button onclick={remove}>Remove</button> -->
+
+<form action="">
+  <input type="text" id="todo" bind:value={name} />
+  <button onclick={add}>Add</button>
+</form>
+
+{#each data as todo (todo.id)}
+  {@render todoRow(todo)}
 {/each}
 
 <style>
