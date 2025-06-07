@@ -1,8 +1,10 @@
 <script>
   import EditToDo from "./EditToDo.svelte";
   import ToDo from "./ToDo.svelte";
+  import { fly } from "svelte/transition";
 
   let data = $state([]);
+  let name = $state("");
 
   let id = 0;
 
@@ -13,14 +15,13 @@
   function add(e) {
     e.preventDefault();
 
-    const input = document.getElementById("todo");
     data.push({
       id: id++,
       // @ts-ignore
-      name: input.value,
+      name: name,
     });
     // @ts-ignore
-    input.value = "";
+    name = "";
   }
 
   function edit(id) {
@@ -43,12 +44,19 @@
 <!-- <button onclick={remove}>Remove</button> -->
 
 <form action="">
-  <input type="text" id="todo" />
+  <input type="text" id="todo" bind:value={name} />
   <button onclick={add}>Add</button>
 </form>
 
 {#each data as todo (todo.id)}
-  <li>
+  <li
+    in:fly={{ y: -200, duration: 2000 }}
+    out:fly={{ y: 200, duration: 2000 }}
+    onintrostart={() => console.log("intro start")}
+    onintroend={() => console.log("intro end")}
+    onoutrostart={() => console.log("outro start")}
+    onoutroend={() => console.log("outro end")}
+  >
     {#if todo.edit}
       <EditToDo id={todo.id} name={todo.name} onedit={onEdit} />
     {:else}
@@ -58,3 +66,20 @@
     {/if}
   </li>
 {/each}
+
+<style>
+  :global {
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  }
+</style>

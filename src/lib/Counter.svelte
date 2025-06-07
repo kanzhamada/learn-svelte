@@ -14,7 +14,7 @@
   });
 
   function increment() {
-    count.push(2);
+    count.push(1);
     // document.getElementById("counter").innerHTML = "Counter : " + count + "";
   }
   $inspect(count).with((type, values) => {
@@ -23,6 +23,16 @@
 </script>
 
 <!-- <h1 id="counter">Counter: 0</h1> -->
-<h1>{count.join(" + ")} = {total}</h1>
+<h1 class={total % 2 === 0 ? "red" : "blue"}>{count.join(" + ")} = {total}</h1>
 
 <button onclick={increment}>increment</button>
+
+<style>
+  .red {
+    color: red;
+  }
+
+  .blue {
+    color: blue;
+  }
+</style>

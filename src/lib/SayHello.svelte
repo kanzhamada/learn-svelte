@@ -5,7 +5,9 @@
   });
 
   function sayHello() {
+    // @ts-ignore
     person.firstName = document.getElementById("firstName").value;
+    // @ts-ignore
     person.lastName = document.getElementById("lastName").value;
   }
 </script>
