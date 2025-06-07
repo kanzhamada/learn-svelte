@@ -1,0 +1,28 @@
+<script>
+  // Tidak reactive
+  // let count = 0;
+
+  // Reactive
+  let count = $state([]);
+  // let total = $derived(count.reduce((a, b) => a + b, 0))
+  let total = $derived.by(() => {
+    let total = 0;
+    for (let i = 0; i < count.length; i++) {
+      total += count[i];
+    }
+    return total;
+  });
+
+  function increment() {
+    count.push(2);
+    // document.getElementById("counter").innerHTML = "Counter : " + count + "";
+  }
+  $inspect(count).with((type, values) => {
+    console.log(type, values);
+  });
+</script>
+
+<!-- <h1 id="counter">Counter: 0</h1> -->
+<h1>{count.join(" + ")} = {total}</h1>
+
+<button onclick={increment}>increment</button>
